@@ -1,0 +1,160 @@
+body {
+    background-color: #e9ebee;
+
+}
+
+.container {
+    background-color: #4267b2;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 700px;
+    align-items: center;
+    border-radius: 10%;
+    box-sizing: border-box;
+    padding: 20px;
+    
+}
+
+.container div {
+    border-radius: 5%;
+}
+
+.upperDashBoard {
+    background-color: rgba(192, 146, 205, 0.83);
+    height: 50px;
+    width: 500px;
+    padding: 5px 10px;
+    font-family: monospace;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.upperDashBoard div {
+    margin-top: 5px;
+    height: 40px;
+}
+
+.lowerDashBoard {
+    background-color: rgba(192, 146, 205, 0.83);
+    margin-top: 10px;
+    width: 500px;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 10px
+}
+
+.lowerDashBoard div {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 40px;
+}
+
+.score {
+    background-color: rgba(137, 101, 147, 0.83);
+    width: 35%;
+    text-align: center;
+    font-size: 18px;
+    line-height: 40px;
+    color: #e9ebee;
+}
+
+.button-smiley {   
+    background-color: #e9ebee;
+    width: 10%;    
+    text-align: center;
+    font-size: x-large;
+    line-height: 40px;
+}
+
+.gamer {
+    background-color: rgba(137, 101, 147, 0.83);
+    width: 35%;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    font-size: 18px;
+    line-height: 30px;
+    color: #e9ebee;
+
+}
+
+.clock {
+    width: 40%;
+}
+
+.lives {
+    width: 60%;
+    transition: 2s;
+}
+
+.button-hintButton {
+    border: 2px solid #e9ebee;
+    box-sizing: border-box;
+    color: #e9ebee;
+    font-weight: bold;
+    line-height: 35px !important;
+    width: 80px;
+    float: left;
+}
+
+.button-gameLevel {
+    background-color: #e9ebee;
+    width: 70px;
+    float: left;
+}
+
+
+.button:hover {
+    cursor: pointer;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.cell {
+    background-color: blanchedalmond;
+    font-family: monospace;
+    width: 30px;
+    height: 30px;
+    border-radius: 8%;
+    margin: 0.2px;
+    text-align: center;
+    font-size: x-large;
+    transition: 0.3s;
+
+}
+
+.cell:hover {
+    cursor: pointer;
+}
+
+.isShown {
+    background-color: #e9ebeead;
+    width: 30px;
+    height: 30px;
+    border-radius: 8%;
+    margin: 0.2px;
+}
+
+.isShown:hover {
+    cursor: auto;
+}
+
+.hitMine {
+    background-color: red;
+}
+
+.isShownMine {
+    background-color: #f6351bb8;
+    width: 30px;
+    height: 30px;
+    border-radius: 8%;
+    margin: 0.2px;
+}
