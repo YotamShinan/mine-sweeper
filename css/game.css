@@ -1,5 +1,6 @@
 body {
-    background-color: #e9ebee;
+    background-image: url('img/2.jfif');
+    background-size: cover;
 
 }
 
@@ -9,10 +10,11 @@ body {
     flex-direction: column;
     margin: auto;
     width: 700px;
+    height: 700px;
     align-items: center;
     border-radius: 10%;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 50px;
     
 }
 
@@ -53,6 +55,7 @@ body {
     font-family: monospace;
     font-size: 14px;
     line-height: 40px;
+    box-shadow: 2px 2px 7px 3px rgba(0, 72, 255, 0.4);
 }
 
 .score {
@@ -70,7 +73,9 @@ body {
     text-align: center;
     font-size: x-large;
     line-height: 40px;
+    box-shadow: 2px 2px 7px 3px rgba(0, 72, 255, 0.4);
 }
+
 
 .gamer {
     background-color: rgba(137, 101, 147, 0.83);
@@ -114,6 +119,14 @@ body {
     cursor: pointer;
 }
 
+.button {
+    transition: 0.3s;
+}
+
+.button:active {
+    transform: translateY(3px);
+}
+
 table {
     margin-top: 20px;
 }
@@ -133,6 +146,10 @@ table {
 
 .cell:hover {
     cursor: pointer;
+}
+
+.cellHintMode {
+    background-color: #cac7c1;
 }
 
 .isShown {

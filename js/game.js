@@ -17,14 +17,16 @@ var gElHints = document.querySelector('.button-hintButton');
 
 var gMines = [];
 var gLives = [];
+var gHint = 3;
+var gCellsAtHintModeCoords = [];
 var gScore = 0;
+var gGameTime = null;
 var gFirstCellClicked = false; // essential for placing mines only after first click, and also for avoiding flag placing before the mines are placed
 
 var gBoard = [];
 var gLevel = {
     size: 8,
     mines: 12,
-    hints: 1
 
 }
 
@@ -48,16 +50,20 @@ function init() {
         startTime: null,
         endTime: null
     }
-
     gFirstCellClicked = false;
+    clearInterval(gGameTime);
+    gGameTime = null;
+    gElClock.innerText = '00:00';
     gElSmileyBtn.innerText = SMILE;
     gLives = [LIFE_SIGN, LIFE_SIGN, LIFE_SIGN];
     gElLives.innerText = gLives;
-    gElHints.innerText = 'Hints: ' + gLevel.hints;
+    gHint = 3;
+    gElHints.innerText = 'Hints: ' + gHint;
     gScore = 0;
     gElScore.innerText = 'Score: ' + gScore;
     gBoard = [];
     gMines = [];
+    gCellsAtHintModeCoords = [];
     buildBoard(gLevel.size);
     renderBoard();
 }
@@ -93,6 +99,7 @@ function renderBoard() {
 function setWarZone(gameLevel, firstI, firstJ) {
     gGame.isOn = true;
     gGame.startTime = new Date().getTime();
+    gGameTime = setInterval(runClock, 100);
     var cnt = 0
     while (cnt < gameLevel) {
         var randRow = getRandomIntInclusive(0, gBoard.length - 1);
@@ -128,9 +135,14 @@ function cellClicked(elCell) {
         setWarZone(gLevel.mines, cellIdxI, cellIdxJ);
         gFirstCellClicked = true;
     }
-    if (gGame.isOn) {
+    if (gGame.isOn && !gGame.isHintModeOn && !gBoard[cellIdxI][cellIdxJ].isMarked) {
         expandShown(cellIdxI, cellIdxJ); // Before revealing the cell - first we check for expanding the shown area
     }
+    if (gGame.isOn && gGame.isHintModeOn && gFirstCellClicked) {
+        clickCellHint(elCell);
+        setTimeout(unrevealHintArea, 1000);
+    }
+
 }
 
 function cellRightClicked(elCell) {
@@ -172,6 +184,7 @@ function revealCell(cellIdxI, cellIdxJ) {
 
     } else if (gBoard[cellIdxI][cellIdxJ].isMine) {
         hitMine(elCell);
+        
     }
 }
 
@@ -215,6 +228,7 @@ function checkVictory() { // called whenever a cell is revealed, and every time 
         gGame.secsPassed = Math.round((gGame.endTime - gGame.startTime) / 1000)
         console.log('Winner!');
         console.log('it took you', gGame.secsPassed, 'seconds');
+        clearInterval(gGameTime);
         getScore(gGame.secsPassed, gLevel.size, gLives.length);
     } else return
 }
@@ -222,7 +236,8 @@ function checkVictory() { // called whenever a cell is revealed, and every time 
 function gameOver(board) {
     gGame.isOn = false;
     gElSmileyBtn.innerText = DEAD;
-    gElLives.innerText = 'LOSER!'
+    gElLives.innerText = 'LOSER!';
+    clearInterval(gGameTime);
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
             if (board[i][j].isMine) {

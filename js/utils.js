@@ -76,14 +76,12 @@ function showConsole(board) { // Cheaty cheaty bang bang :)
 function changeLevel(elButton) {
     gLevel.size = +elButton.getAttribute('data-size');
     gLevel.mines = +elButton.getAttribute('data-mines');
-    gLevel.hints = +elButton.getAttribute('data-hint');
+    clearInterval(gGameTime);
     init();
 }
 
 
 function getScore(secsPass, level, livesLeft) {
-    debugger
-
     var extraForLevel = 0;
     var extraForTime = 0;
     var extraForLives = 0;
@@ -104,7 +102,7 @@ function getScore(secsPass, level, livesLeft) {
             break;           
     }
 
-    switch (secsPass) {
+    switch (true) {
         case secsPass < 150:
             extraForTime = 500;
             break;
@@ -142,10 +140,65 @@ function getScore(secsPass, level, livesLeft) {
 }
 
 function hintMode() {
-
+    if (gGame.isOn && gHint > 0 && gFirstCellClicked) {
+        gGame.isHintModeOn = true; 
+    } else return;
 }
 
 
+function clickCellHint(elCell) {
+
+    var cellIdxI = +elCell.getAttribute('data-i');
+    var cellIdxJ = +elCell.getAttribute('data-j');
+
+    var rowSatrt = cellIdxI - 1;
+    var rowEnd = cellIdxI + 1;
+    var colStart = cellIdxJ - 1;
+    var colEnd = cellIdxJ + 1;
+    for (var i = rowSatrt; i <= rowEnd; i++) {
+        if (i < 0 || i >= gBoard.length) continue;
+        for (var j = colStart; j <= colEnd; j++) {
+            var currElCell = document.querySelector(`.cell-${i}-${j}`)
+            if (j < 0 || j >= gBoard[0].length) continue;
+            if (!currElCell.classList.contains('isShown')) {
+                currElCell.classList.add('cellHintMode');
+                if (gBoard[i][j].isMine) {
+                    currElCell.innerText = MINE;
+                }
+               gCellsAtHintModeCoords.push({i: i, j:j});
+            }
+        }
+    }
+    gHint--;
+    gElHints.innerText = 'Hints: ' + gHint;
+    gGame.isHintModeOn = false;
+    console.log('clicked on cell i:', cellIdxI, 'j:', cellIdxJ, 'during hint mode')
+}
+
+function unrevealHintArea() {
+    for (var i = 0; i < gCellsAtHintModeCoords.length; i++) {
+        var currElCell = document.querySelector(`.cell-${gCellsAtHintModeCoords[i].i}-${gCellsAtHintModeCoords[i].j}`)
+        currElCell.classList.remove('cellHintMode');
+        if (!gBoard[gCellsAtHintModeCoords[i].i][gCellsAtHintModeCoords[i].j].isMarked) {
+            currElCell.innerText = '';
+        }
+        if (gBoard[gCellsAtHintModeCoords[i].i][gCellsAtHintModeCoords[i].j].isMarked && gBoard[gCellsAtHintModeCoords[i].i][gCellsAtHintModeCoords[i].j].isMine) {
+            currElCell.innerText = FLAG;
+        }
+    }
+    gCellsAtHintModeCoords = [];
+}
+
+function runClock() {
+    var currTS = Date.now();
+    var TSdifference = currTS - gGame.startTime;
+    var minutes = Math.floor((TSdifference % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((TSdifference % (1000 * 60)) / 1000);
+    if (minutes < 10) { minutes = "0" + minutes } else { minutes = minutes };
+    if (seconds < 10) { seconds = "0" + seconds } else { seconds = seconds };
+    gElClock.innerText = minutes + ':' + seconds;
+
+}
 
 
 
