@@ -63,6 +63,7 @@ function init() {
     gElScore.innerText = 'Score: ' + gScore;
     gBoard = [];
     gMines = [];
+    gElHints.classList.remove('hintModeOn');
     gCellsAtHintModeCoords = [];
     buildBoard(gLevel.size);
     renderBoard();

@@ -175,3 +175,18 @@ table {
     border-radius: 8%;
     margin: 0.2px;
 }
+
+.hintModeOn {
+    animation: NAME-YOUR-ANIMATION 1.5s infinite;  
+  }
+  @keyframes NAME-YOUR-ANIMATION {
+    0%, 49% {
+      background-color: rgb(117, 209, 63);
+      box-shadow: 2px 2px 10px 10px rgba(255, 162, 0, 0.25);
+      opacity: 0.8;
+    }
+    50%, 100% {
+      background-color: rgb(171, 138, 200);
+      box-shadow: 2px 2px 10px 10px rgba(255, 162, 0, 0.25);
+    }
+}

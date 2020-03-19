@@ -142,6 +142,7 @@ function getScore(secsPass, level, livesLeft) {
 function hintMode() {
     if (gGame.isOn && gHint > 0 && gFirstCellClicked) {
         gGame.isHintModeOn = true; 
+        gElHints.classList.add('hintModeOn');
     } else return;
 }
 
@@ -186,6 +187,7 @@ function unrevealHintArea() {
             currElCell.innerText = FLAG;
         }
     }
+    gElHints.classList.remove('hintModeOn');
     gCellsAtHintModeCoords = [];
 }
 
